@@ -25,17 +25,17 @@ public class ServerSocket extends WebSocketServer {
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-
+        Log.i(TAG, "onClose: " + reason);
     }
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-
+        Log.i(TAG, message);
     }
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-
+        Log.i(TAG, ex.getMessage());
     }
 
     @Override
