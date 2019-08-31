@@ -21,5 +21,5 @@ public abstract class Database extends RoomDatabase {
         return INSTANCE;
     }
 
-    abstract ShopDao shopDao();
+    public abstract ShopDao shopDao();
 }

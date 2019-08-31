@@ -1,10 +1,22 @@
 package com.demo.mealorder;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.demo.mealorder.db.Database;
+import com.demo.mealorder.db.Shop;
+import com.demo.mealorder.db.ShopDao;
 import com.demo.mealorder.websocket.ServerManager;
+
+import io.reactivex.Completable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        MainRecyclerViewAdapter mainRecyclerViewAdapter = new MainRecyclerViewAdapter();
+        recyclerView.setAdapter(mainRecyclerViewAdapter);
+
         ServerManager serverManager = new ServerManager();
         try {
             //https://stackoverflow.com/questions/2694797/bindexception-with-internet-permission-requested
@@ -21,5 +38,15 @@ public class MainActivity extends AppCompatActivity {
         } catch (IllegalStateException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+
+        ShopDao shopDao = Database.getDatabase().shopDao();
+        shopDao.select().observe(this, shops -> {
+            mainRecyclerViewAdapter.setData(shops);
+            mainRecyclerViewAdapter.notifyDataSetChanged();
+        });
+
+        findViewById(R.id.add).setOnClickListener(v -> startActivity(new Intent(this, AddRecordActivity.class)));
     }
+
+
 }
