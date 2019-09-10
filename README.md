@@ -28,3 +28,16 @@ https://blog.csdn.net/xiexiaotian11/article/details/90186910
 
 https://www.cnblogs.com/littlepanpc/p/9269549.html
 
+
+AndroidAsync
+https://github.com/koush/AndroidAsync
+
+
+Ktor
+https://ktor.io/quickstart/faq.html#android-support
+https://proandroiddev.com/kotlin-backend-yes-its-possible-953388acffc3
+https://ktor.io/servers/index.html
+
+
+Android Server
+https://hackernoon.com/deploy-a-backend-app-as-an-android-engineer-part-2-b572245a3f3e
